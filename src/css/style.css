@@ -1,0 +1,65 @@
+body {
+    font-size: 14pt;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.title {
+    text-align: center;
+}
+
+.columns-container {
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.column {
+    width: 33.33%;
+    min-height: 400px;
+    padding: 2px;
+}
+
+.column:nth-child(1) {
+    background-color: lightgreen;
+}
+
+.column:nth-child(2) {
+    background-color: lightyellow;
+}
+
+.column:nth-child(3) {
+    background-color: lightcoral;
+}
+
+.card {
+    border: 1px solid gray;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.card:nth-child(n + 2) {
+    margin-top: 4px;
+}
+
+.card-toolbar {
+    margin-top: 4px;
+}
+
+.column-toolbar {
+
+}
+
+.adding-card-area {
+    width: 100%;
+    min-height: 100px;
+}
+
+.display-none {
+    display: none;
+}
+
+.dragging {
+    position: absolute;
+}
