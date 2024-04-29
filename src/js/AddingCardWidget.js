@@ -44,4 +44,8 @@ export default class AddingCardWidget {
     this.trelloWidget.showColumnToolbar(this.ownerElement);
     this.ownerElement.removeChild(this.element)
   }
+
+  setFocus() {
+    this.element.querySelector(".adding-card-area").select();
+  }
 }

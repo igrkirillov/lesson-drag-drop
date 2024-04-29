@@ -51,7 +51,8 @@ export default class TrelloWidget {
   onClickAddCard(event) {
     event.preventDefault();
     const columnElement = event.target.closest(".column");
-    new AddingCardWidget(this, columnElement.querySelector(".cards"));
+    const addWidget = new AddingCardWidget(this, columnElement.querySelector(".cards"));
+    addWidget.setFocus();
     this.hideColumnToolbar(columnElement);
   }
 
@@ -78,9 +79,5 @@ export default class TrelloWidget {
 
   addCard(cardsElement, data) {
     this.cardWidgets.push(new CardWidget(this, cardsElement, data));
-  }
-
-  startDragging(cardWidget) {
-
   }
 }
