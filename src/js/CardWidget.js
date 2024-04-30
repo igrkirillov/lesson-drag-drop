@@ -37,6 +37,7 @@ export default class CardWidget {
 
   onMouseDown(event) {
     this.draggingFlag = true;
+    this.hideRemoveButton();
   }
 
   onMouseOver(event) {
