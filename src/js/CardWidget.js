@@ -21,7 +21,7 @@ export default class CardWidget {
       <div class="card-toolbar">
         <a href="#" class="card-edit">🖹</a>        
       </div>
-<!--      <a href="#" class="card-remove display-none">&#215;</a>-->`;
+      <a href="#" class="card-remove display-none">&#215;</a>`;
     ownerElement.appendChild(element);
     return element;
   }
@@ -32,7 +32,7 @@ export default class CardWidget {
     this.element.addEventListener("mousemove", this.onMouseMove.bind(this));
     this.element.addEventListener("mouseup", this.onMouseUp.bind(this));
     this.element.addEventListener("mouseout", this.onMouseOut.bind(this));
-    // this.getCardRemoveButtonElement().addEventListener("click", this.onClickRemoveButton.bind(this));
+    this.getCardRemoveButtonElement().addEventListener("click", this.onClickRemoveButton.bind(this));
   }
 
   onMouseDown(event) {
@@ -111,10 +111,17 @@ export default class CardWidget {
   }
 
   showRemoveButton() {
-    // this.getCardRemoveButtonElement().classList.remove("display-none");
+    const buttonElement = this.getCardRemoveButtonElement();
+    buttonElement.classList.remove("display-none");
+    // Здесь у меня не получилось сделать через css, потому что
+    // при position=relative у класса card вся моя система DnD на основе
+    // getBoundingClientRect начинает ломаться, поэтому я вручную устанавливаю координаты позиций
+    const rect = this.element.getBoundingClientRect();
+    buttonElement.style.left = rect.left + rect.width - 14 + "px";
+    buttonElement.style.top = rect.top + 2 + "px";
   }
 
   hideRemoveButton() {
-    // this.getCardRemoveButtonElement().classList.add("display-none");
+    this.getCardRemoveButtonElement().classList.add("display-none");
   }
 }

@@ -78,6 +78,7 @@ export default class TrelloWidget {
   }
 
   loadData(cardDtoArray) {
+    console.log(cardDtoArray)
     for (const cardDto of cardDtoArray) {
       this.addCard(cardDto.column, cardDto.data, false);
     }
