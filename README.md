@@ -1,2 +1,2 @@
 # 6 Drag And Drop
-[![Build status](https://ci.appveyor.com/api/projects/status/hbnw92qwrpsp2w5x?svg=true)](https://ci.appveyor.com/project/igrkirillov/lesson-list)
+[![Build status](https://ci.appveyor.com/api/projects/status/jj9y4tske7dqbpg2?svg=true)](https://ci.appveyor.com/project/igrkirillov/lesson-drag-drop)
