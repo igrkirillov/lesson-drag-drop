@@ -19,8 +19,9 @@ export default class CardWidget {
     element.innerHTML = `
       <span>${data.text}</span>
       <div class="card-toolbar">
-        <a href="#" class="card-edit">🖹</a>
-      </div>`;
+        <a href="#" class="card-edit">🖹</a>        
+      </div>
+<!--      <a href="#" class="card-remove display-none">&#215;</a>-->`;
     ownerElement.appendChild(element);
     return element;
   }
@@ -31,6 +32,7 @@ export default class CardWidget {
     this.element.addEventListener("mousemove", this.onMouseMove.bind(this));
     this.element.addEventListener("mouseup", this.onMouseUp.bind(this));
     this.element.addEventListener("mouseout", this.onMouseOut.bind(this));
+    // this.getCardRemoveButtonElement().addEventListener("click", this.onClickRemoveButton.bind(this));
   }
 
   onMouseDown(event) {
@@ -39,6 +41,7 @@ export default class CardWidget {
 
   onMouseOver(event) {
     this.element.style.cursor = cursors.pointer;
+    this.showRemoveButton();
   }
 
   onMouseMove(event) {
@@ -54,6 +57,12 @@ export default class CardWidget {
 
   onMouseOut(event) {
     this.element.style.cursor = "";
+    this.hideRemoveButton();
+  }
+
+  onClickRemoveButton(event) {
+    event.preventDefault();
+    this.remove();
   }
 
   startDragging(mouseEvent) {
@@ -95,5 +104,17 @@ export default class CardWidget {
   remove() {
     this.ownerElement.removeChild(this.element);
     this.trelloWidget.notifyCardRemoved(this);
+  }
+
+  getCardRemoveButtonElement() {
+    return this.element.querySelector(".card-remove");
+  }
+
+  showRemoveButton() {
+    // this.getCardRemoveButtonElement().classList.remove("display-none");
+  }
+
+  hideRemoveButton() {
+    // this.getCardRemoveButtonElement().classList.add("display-none");
   }
 }

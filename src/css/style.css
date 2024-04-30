@@ -37,6 +37,15 @@ body {
     border: 1px solid gray;
     border-radius: 4px;
     padding: 2px;
+    position: relative;
+}
+
+.card-remove {
+    display: block;
+    position: absolute;
+    text-decoration: none;
+    right: 4px;
+    top: 2px;
 }
 
 .sketch {
