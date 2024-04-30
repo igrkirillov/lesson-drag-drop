@@ -47,6 +47,7 @@ export default class CardWidget {
 
   onMouseMove(event) {
     if (this.draggingFlag) {
+      this.hideRemoveButton();
       this.startDragging(event);
     }
   }
@@ -113,7 +114,9 @@ export default class CardWidget {
 
   showRemoveButton() {
     const buttonElement = this.getCardRemoveButtonElement();
-    buttonElement.classList.remove("display-none");
+    if (buttonElement.classList.contains("display-none")) {
+      buttonElement.classList.remove("display-none");
+    }
     // Здесь у меня не получилось сделать через css, потому что
     // при position=relative у класса card вся моя система DnD на основе
     // getBoundingClientRect начинает ломаться, поэтому я вручную устанавливаю координаты позиций
@@ -123,6 +126,9 @@ export default class CardWidget {
   }
 
   hideRemoveButton() {
-    this.getCardRemoveButtonElement().classList.add("display-none");
+    const buttonElement = this.getCardRemoveButtonElement();
+    if (!buttonElement.classList.contains("display-none")) {
+      buttonElement.classList.add("display-none");
+    }
   }
 }
