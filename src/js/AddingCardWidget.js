@@ -22,18 +22,28 @@ export default class AddingCardWidget {
   }
 
   addListeners() {
-    const addButtonElement = this.element.querySelector(".card-add-button")
-    addButtonElement.addEventListener("click", this.onClickAddButton.bind(this));
+    const addButtonElement = this.element.querySelector(".card-add-button");
+    addButtonElement.addEventListener(
+      "click",
+      this.onClickAddButton.bind(this)
+    );
 
-    const cancelButtonElement = this.element.querySelector(".card-cancel-button")
-    cancelButtonElement.addEventListener("click", this.onClickCancelButton.bind(this));
+    const cancelButtonElement = this.element.querySelector(
+      ".card-cancel-button"
+    );
+    cancelButtonElement.addEventListener(
+      "click",
+      this.onClickCancelButton.bind(this)
+    );
   }
 
   onClickAddButton(event) {
-    const textAreaElement = event.target.closest(".card").querySelector(".adding-card-area");
+    const textAreaElement = event.target
+      .closest(".card")
+      .querySelector(".adding-card-area");
     const data = {
       text: textAreaElement.value,
-    }
+    };
     const columnNum = this.ownerElement.closest(".column").dataset["num"];
     this.trelloWidget.addCard(columnNum, data, true);
     this.close();
@@ -45,7 +55,7 @@ export default class AddingCardWidget {
 
   close() {
     this.trelloWidget.showColumnToolbar(this.ownerElement);
-    this.ownerElement.removeChild(this.element)
+    this.ownerElement.removeChild(this.element);
   }
 
   setFocus() {

@@ -1,4 +1,4 @@
-import {cursors} from "./cursors";
+import { cursors } from "./cursors";
 import DraggingCoordinates from "./DraggingCoordinates";
 import Point from "./Point";
 
@@ -76,7 +76,10 @@ export default class CardWidget {
 
   updateDraggingCoordinates(event) {
     if (!this.draggingCoordinates) {
-      this.draggingCoordinates = new DraggingCoordinates(new Point(event.x, event.y), this.element.getBoundingClientRect());
+      this.draggingCoordinates = new DraggingCoordinates(
+        new Point(event.x, event.y),
+        this.element.getBoundingClientRect()
+      );
     } else {
       this.draggingCoordinates.update(event);
     }

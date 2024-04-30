@@ -1,4 +1,4 @@
-import {cursors} from "./cursors";
+import { cursors } from "./cursors";
 import DraggingCoordinates from "./DraggingCoordinates";
 import Point from "./Point";
 
@@ -19,7 +19,9 @@ export default class CardSketchWidget {
 
   calcPositionAndAddElement(element, ownerElement, draggingCoordinates) {
     let isInserted = false;
-    const cardsArray = Array.from(ownerElement.querySelectorAll(".card")).filter(el => !el.classList.contains("dragging"));
+    const cardsArray = Array.from(
+      ownerElement.querySelectorAll(".card")
+    ).filter((el) => !el.classList.contains("dragging"));
     for (const cardElement of cardsArray) {
       const rect = cardElement.getBoundingClientRect();
       const middleY = rect.top + rect.height / 2;
@@ -38,13 +40,23 @@ export default class CardSketchWidget {
     if (ownerElement !== this.ownerElement) {
       return false;
     }
-    const cardsArray = Array.from(this.ownerElement.querySelectorAll(".card")).filter(el => !el.classList.contains("dragging"));
-    const index = cardsArray.findIndex(el => el === this.element);
+    const cardsArray = Array.from(
+      this.ownerElement.querySelectorAll(".card")
+    ).filter((el) => !el.classList.contains("dragging"));
+    const index = cardsArray.findIndex((el) => el === this.element);
     const prevCard = index > 0 ? cardsArray[index - 1] : null;
-    const nextCard = index < cardsArray.length - 1 && index >= 0 ? cardsArray[index + 1] : null;
+    const nextCard =
+      index < cardsArray.length - 1 && index >= 0
+        ? cardsArray[index + 1]
+        : null;
     const y0 = prevCard ? this.calcMiddleYOfElement(prevCard) : 0;
-    const y1 = nextCard ? this.calcMiddleYOfElement(nextCard) : document.body.getBoundingClientRect().bottom;
-    return !!(draggingCoordinates.elementMiddleY >= y0 && draggingCoordinates.elementMiddleY <= y1);
+    const y1 = nextCard
+      ? this.calcMiddleYOfElement(nextCard)
+      : document.body.getBoundingClientRect().bottom;
+    return !!(
+      draggingCoordinates.elementMiddleY >= y0 &&
+      draggingCoordinates.elementMiddleY <= y1
+    );
   }
 
   calcMiddleYOfElement(element) {

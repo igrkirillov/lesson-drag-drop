@@ -1,7 +1,7 @@
 import CardWidget from "./CardWidget";
 import AddingCardWidget from "./AddingCardWidget";
 import CardSketchWidget from "./CardSketchWidget";
-import {getFromLocalStorage, saveToLocalStorage} from "./storageUtils";
+import { getFromLocalStorage, saveToLocalStorage } from "./storageUtils";
 
 export default class TrelloWidget {
   constructor(ownerElement) {
@@ -55,7 +55,10 @@ export default class TrelloWidget {
   onClickAddCard(event) {
     event.preventDefault();
     const columnElement = event.target.closest(".column");
-    const addWidget = new AddingCardWidget(this, columnElement.querySelector(".cards"));
+    const addWidget = new AddingCardWidget(
+      this,
+      columnElement.querySelector(".cards")
+    );
     addWidget.setFocus();
     this.hideColumnToolbar(columnElement);
   }
@@ -63,13 +66,15 @@ export default class TrelloWidget {
   hideColumnToolbar(cardsElement) {
     cardsElement
       .closest(".column")
-      .querySelector(".column-toolbar").classList.add("display-none");
+      .querySelector(".column-toolbar")
+      .classList.add("display-none");
   }
 
   showColumnToolbar(cardsElement) {
     cardsElement
       .closest(".column")
-      .querySelector(".column-toolbar").classList.remove("display-none")
+      .querySelector(".column-toolbar")
+      .classList.remove("display-none");
   }
 
   loadData(cardDtoArray) {
@@ -83,7 +88,8 @@ export default class TrelloWidget {
   }
 
   addCard(columnNum, data, notify) {
-    const cardsElement = this.getColumnElements()[columnNum - 1].querySelector(".cards");
+    const cardsElement =
+      this.getColumnElements()[columnNum - 1].querySelector(".cards");
     const card = new CardWidget(this, cardsElement, data);
     this.cards.push(card);
     if (notify) {
@@ -97,13 +103,23 @@ export default class TrelloWidget {
       const cardsElement = columnElement.querySelector(".cards");
       const rect = columnElement.getBoundingClientRect();
       const dcx = draggingCoordinates.elementPoint.x;
-      if (dcx >= rect.x && dcx <= (rect.x + rect.width)) {
+      if (dcx >= rect.x && dcx <= rect.x + rect.width) {
         if (!this.cardSketch) {
-          this.cardSketch = new CardSketchWidget(this, cardsElement, draggingCoordinates);
+          this.cardSketch = new CardSketchWidget(
+            this,
+            cardsElement,
+            draggingCoordinates
+          );
           break;
-        } else if (!this.cardSketch.isApplicable(cardsElement, draggingCoordinates)) {
+        } else if (
+          !this.cardSketch.isApplicable(cardsElement, draggingCoordinates)
+        ) {
           this.cardSketch.remove();
-          this.cardSketch = new CardSketchWidget(this, cardsElement, draggingCoordinates);
+          this.cardSketch = new CardSketchWidget(
+            this,
+            cardsElement,
+            draggingCoordinates
+          );
           break;
         }
       }
@@ -113,7 +129,8 @@ export default class TrelloWidget {
   stopDragging(card, draggingCoordinates) {
     if (this.cardSketch) {
       card.remove();
-      const columnNum = this.cardSketch.ownerElement.closest(".column").dataset["num"];
+      const columnNum =
+        this.cardSketch.ownerElement.closest(".column").dataset["num"];
       const newCard = this.addCard(columnNum, card.data, true);
       this.cardSketch.element.replaceWith(newCard.element);
       this.cardSketch = null;

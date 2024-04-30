@@ -1,4 +1,4 @@
-import {deserializeFromJsonText, serializeToJsonText} from "./serializeUtils";
+import { deserializeFromJsonText, serializeToJsonText } from "./serializeUtils";
 
 export function saveToLocalStorage(cards) {
   if (cards) {
