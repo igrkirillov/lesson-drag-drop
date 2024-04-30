@@ -43,27 +43,35 @@ export default class CardWidget {
 
   onMouseMove(event) {
     if (this.draggingFlag) {
-      this.processDragging(event);
+      this.startDragging(event);
     }
   }
 
   onMouseUp(event) {
     this.draggingFlag = false;
+    this.stopDragging(event);
   }
 
   onMouseOut(event) {
     this.element.style.cursor = "";
   }
 
-  processDragging(event) {
-    this.updateDraggingCoordinates(event);
+  startDragging(mouseEvent) {
+    this.updateDraggingCoordinates(mouseEvent);
     if (!this.element.classList.contains("dragging")) {
       this.element.classList.add("dragging");
     }
-
     this.updateDraggingPosition();
+    this.trelloWidget.startDragging(this, this.draggingCoordinates);
+  }
 
-    this.trelloWidget.processDragging(this, this.draggingCoordinates);
+  stopDragging(mouseEvent) {
+    this.updateDraggingCoordinates(mouseEvent);
+    this.updateDraggingPosition();
+    this.element.classList.remove("dragging");
+    const draggingCoordinates = this.draggingCoordinates;
+    this.draggingCoordinates = null;
+    this.trelloWidget.stopDragging(this, draggingCoordinates);
   }
 
   updateDraggingCoordinates(event) {
@@ -79,5 +87,10 @@ export default class CardWidget {
     this.element.style.top = this.draggingCoordinates.elementPoint.y + "px";
     this.element.style.width = this.draggingCoordinates.elementSize.x + "px";
     this.element.style.height = this.draggingCoordinates.elementSize.y + "px";
+  }
+
+  remove() {
+    this.ownerElement.removeChild(this.element);
+    this.trelloWidget.notifyCardRemoved(this);
   }
 }

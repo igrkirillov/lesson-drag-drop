@@ -1,3 +1,5 @@
+import CardWidget from "./CardWidget";
+
 export default class AddingCardWidget {
   constructor(trelloWidget, ownerElement) {
     this.element = this.createElement(ownerElement);
@@ -32,7 +34,8 @@ export default class AddingCardWidget {
     const data = {
       text: textAreaElement.value,
     }
-    this.trelloWidget.addCard(this.ownerElement, data);
+    const columnNum = this.ownerElement.closest(".column").dataset["num"];
+    this.trelloWidget.addCard(columnNum, data, true);
     this.close();
   }
 

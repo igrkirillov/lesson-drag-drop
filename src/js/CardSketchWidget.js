@@ -34,7 +34,10 @@ export default class CardSketchWidget {
     }
   }
 
-  isApplicable(draggingCoordinates) {
+  isApplicable(ownerElement, draggingCoordinates) {
+    if (ownerElement !== this.ownerElement) {
+      return false;
+    }
     const cardsArray = Array.from(this.ownerElement.querySelectorAll(".card")).filter(el => !el.classList.contains("dragging"));
     const index = cardsArray.findIndex(el => el === this.element);
     const prevCard = index > 0 ? cardsArray[index - 1] : null;
