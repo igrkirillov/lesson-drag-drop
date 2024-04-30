@@ -1,11 +1,13 @@
 import CardWidget from "./CardWidget";
 import AddingCardWidget from "./AddingCardWidget";
+import CardSketchWidget from "./CardSketchWidget";
 
 export default class TrelloWidget {
   constructor(ownerElement) {
     this.element = this.createElement(ownerElement);
     this.cardWidgets = [];
     this.addListeners();
+    this.cardSketch = null;
   }
 
   createElement(ownerElement) {
@@ -69,15 +71,34 @@ export default class TrelloWidget {
   }
 
   loadData(data) {
-    const element1 = this.element.querySelector(".column:nth-child(1)");
-    const element2 = this.element.querySelector(".column:nth-child(2)");
-    const element3 = this.element.querySelector(".column:nth-child(3)");
+    const element1 = this.getColumnElements()[0];
     for (const cardData of data) {
       this.cardWidgets.push(new CardWidget(this, element1, cardData));
     }
   }
 
+  getColumnElements() {
+    return Array.from(this.element.querySelectorAll(".column"));
+  }
+
   addCard(cardsElement, data) {
     this.cardWidgets.push(new CardWidget(this, cardsElement, data));
+  }
+
+  processDragging(cardElement, draggingCoordinates) {
+    for (const columnElement of this.getColumnElements()) {
+      const rect = columnElement.getBoundingClientRect();
+      const dcx = draggingCoordinates.elementPoint.x;
+      if (dcx >= rect.x && dcx <= (rect.x + rect.width)) {
+        if (!this.cardSketch) {
+          this.cardSketch = new CardSketchWidget(this, columnElement.querySelector(".cards"), draggingCoordinates);
+          break;
+        } else if (!this.cardSketch.isApplicable(draggingCoordinates)) {
+          this.cardSketch.remove();
+          this.cardSketch = new CardSketchWidget(this, columnElement.querySelector(".cards"), draggingCoordinates);
+          break;
+        }
+      }
+    }
   }
 }

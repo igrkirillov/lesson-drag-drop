@@ -7,12 +7,16 @@ export default class DraggingCoordinates {
     this.elementSize = new Point(elementRect.width, elementRect.height);
   }
 
-  update(event) {
-    const dx = event.x - this.cursorPoint.x;
-    const dy = event.y - this.cursorPoint.y;
-    this.cursorPoint.x = event.x;
-    this.cursorPoint.y = event.y;
+  update(mouseEvent) {
+    const dx = mouseEvent.x - this.cursorPoint.x;
+    const dy = mouseEvent.y - this.cursorPoint.y;
+    this.cursorPoint.x = mouseEvent.x;
+    this.cursorPoint.y = mouseEvent.y;
     this.elementPoint.x = this.elementPoint.x + dx;
     this.elementPoint.y = this.elementPoint.y + dy;
+  }
+
+  get elementMiddleY() {
+    return this.elementPoint.y + this.elementSize.y / 2;
   }
 }

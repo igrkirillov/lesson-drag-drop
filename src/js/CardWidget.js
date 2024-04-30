@@ -43,7 +43,7 @@ export default class CardWidget {
 
   onMouseMove(event) {
     if (this.draggingFlag) {
-      this.startDragging(event);
+      this.processDragging(event);
     }
   }
 
@@ -55,12 +55,15 @@ export default class CardWidget {
     this.element.style.cursor = "";
   }
 
-  startDragging(event) {
+  processDragging(event) {
     this.updateDraggingCoordinates(event);
     if (!this.element.classList.contains("dragging")) {
       this.element.classList.add("dragging");
     }
+
     this.updateDraggingPosition();
+
+    this.trelloWidget.processDragging(this, this.draggingCoordinates);
   }
 
   updateDraggingCoordinates(event) {
